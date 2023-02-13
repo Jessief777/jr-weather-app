@@ -29,7 +29,7 @@ const WeatherResult = (props) => {
         <p>{dateTime.toLocaleDateString("en-AU", options)}</p>
       </div>
 
-      <ul className="weather-info">
+      <ul>
         <li>
           <img src={weather.condition.icon} alt="weather condition icon" />
           <p>{weather.condition.text}</p>

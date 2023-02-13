@@ -3,14 +3,25 @@ import { fetchWeatherByCity } from "../../../services/weatherService";
 import "./SearchCity.css";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import Alert from "react-bootstrap/Alert";
 
 const SearchCity = (props) => {
   const [city, setCity] = useState("");
   const [showAirQuality, setShowAirQuality] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
+  const [error, setError] = useState("");
 
   const onCityInputChangeHandler = (event) => {
     const value = event.target.value;
     setCity(value);
+    setError("");
+
+    //input data validation
+    if (value.length > 1) {
+      setIsFormValid(true);
+    } else {
+      setIsFormValid(false);
+    }
   };
 
   const onSearchCityHandler = async (event) => {
@@ -25,7 +36,8 @@ const SearchCity = (props) => {
       const weatherData = await fetchWeatherByCity(city, showAirQuality);
       props.search(weatherData);
     } catch (error) {
-      console.error("Failed to fetch city weather due to error: ", error);
+      //console.error("Failed to fetch city weather due to error: ", error);
+      setError(error.message);
     } finally {
       props.setLoading(false);
     }
@@ -47,6 +59,7 @@ const SearchCity = (props) => {
           onChange={onCityInputChangeHandler}
         />
       </Form.Group>
+      {error && <Alert variant="danger">{error}</Alert>}
       <Form.Group className="mb-3" controlId="formBasicCheckbox">
         <Form.Check
           type="checkbox"
@@ -55,7 +68,7 @@ const SearchCity = (props) => {
           onChange={onCheckBoxChangeHandler}
         />
       </Form.Group>
-      <Button variant="primary" type="submit">
+      <Button variant="primary" type="submit" disabled={!isFormValid}>
         Search
       </Button>
     </Form>

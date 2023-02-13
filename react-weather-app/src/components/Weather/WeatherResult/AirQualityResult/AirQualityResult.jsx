@@ -1,14 +1,27 @@
-import "./AirQualityResult";
+import "../AirQualityResult/AirQualityResult.css";
+
+const toFixedTwoFractionDigits = (value) => {
+  return Number.parseFloat(value).toFixed(2);
+};
+//parseFloat() only string or numbers
 
 const AirQualityResult = (props) => {
   return (
     <div>
       <h3>Air Quality</h3>
       <ul>
-        <li>co: {props.airQualityData.co}</li>
-        <li>no2: {props.airQualityData.no2}</li>
-        <li>pm2.5: {props.airQualityData.pm2_5}</li>
-        <li>pm10: {props.airQualityData.pm10}</li>
+        <li>
+          <p>co: {toFixedTwoFractionDigits(props.airQualityData.co)}</p>
+        </li>
+        <li>
+          <p>no2: {toFixedTwoFractionDigits(props.airQualityData.no2)}</p>
+        </li>
+        <li>
+          <p>pm2.5: {toFixedTwoFractionDigits(props.airQualityData.pm2_5)}</p>
+        </li>
+        <li>
+          <p>pm10: {toFixedTwoFractionDigits(props.airQualityData.pm10)}</p>
+        </li>
       </ul>
     </div>
   );
